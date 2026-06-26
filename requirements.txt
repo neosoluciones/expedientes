@@ -1,0 +1,6 @@
+requests
+pymongo
+fastapi
+uvicorn
+python-keycloak
+pypdf

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expediente 264232 — SEGURA p/ Prescripción Adquisitiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b1120;
+  --surface: #131d30;
+  --surface2: #1a2640;
+  --border: #1e3050;
+  --border2: #253860;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --muted2: #94a3b8;
+  --accent: #3b82f6;
+  --accent2: #1d4ed8;
+  --purple: #7c3aed;
+  --amber: #d97706;
+  --green: #059669;
+  --red: #dc2626;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Lato', sans-serif; font-size: 14px; min-height: 100vh; }
+.header { background: linear-gradient(100deg, #0d1e3a 0%, #131d30 100%); border-bottom: 2px solid var(--border2); padding: 20px 28px; display: flex; gap: 18px; align-items: flex-start; animation: fadeDown 0.5s ease both; }
+.header-icon { background: var(--accent2); border-radius: 12px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; box-shadow: 0 4px 18px rgba(29,78,216,.45); }
+.header-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 7px; }
+.badge { font-size: 10px; padding: 3px 10px; border-radius: 20px; letter-spacing: .07em; font-family: 'Source Code Pro', monospace; }
+.badge-blue { background: rgba(29,78,216,.25); color: #93c5fd; border: 1px solid rgba(29,78,216,.4); }
+.badge-green { background: rgba(5,150,105,.25); color: #6ee7b7; border: 1px solid rgba(5,150,105,.4); }
+.badge-amber { background: rgba(217,119,6,.20); color: #fbbf24; border: 1px solid rgba(217,119,6,.35); }
+.header h1 { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.5; margin-bottom: 5px; }
+.header-sub { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.header-sub strong { color: #60a5fa; }
+.header-tribunal { font-size: 11px; color: #475569; margin-top: 3px; }
+.stats-bar { display: flex; background: #090f1c; border-bottom: 1px solid var(--border); animation: fadeDown 0.5s .1s ease both; }
+.stat { flex: 1; padding: 13px 10px; text-align: center; border-right: 1px solid var(--border); }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Source Code Pro', monospace; font-size: 22px; font-weight: 600; }
+.stat-label { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: .06em; text-transform: uppercase; }
+.tabs { display: flex; background: #090f1c; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn { padding: 12px 20px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-family: 'Lato', sans-serif; white-space: nowrap; display: flex; align-items: center; gap: 6px; transition: color .15s, border-color .15s, background .15s; }
+.tab-btn:hover { color: var(--text); background: rgba(255,255,255,.03); }
+.tab-btn.active { color: #f1f5f9; border-bottom-color: var(--accent); background: var(--surface); }
+.content { padding: 24px 28px; max-width: 980px; margin: 0 auto; }
+.panel { display: none; animation: fadeUp .25s ease; }
+.panel.active { display: block; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.col-span { grid-column: 1 / -1; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.card-title { padding: 10px 16px; background: #090f1c; border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--muted2); letter-spacing: .05em; }
+.card-body { padding: 14px 16px; }
+.info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid #090f1c; gap: 12px; }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+.info-value { font-size: 12px; color: #cbd5e1; text-align: right; }
+.info-value.mono { font-family: 'Source Code Pro', monospace; font-size: 11px; }
+.info-badge { font-size: 10px; padding: 2px 8px; border-radius: 12px; font-family: 'Source Code Pro', monospace; }
+.alert { padding: 10px 12px; border-radius: 7px; font-size: 11px; line-height: 1.6; margin-top: 8px; }
+.alert-amber { background: rgba(120,53,15,.25); border: 1px solid rgba(217,119,6,.4); color: #fde68a; }
+.alert-green { background: rgba(6,95,70,.2); border: 1px solid rgba(16,185,129,.3); color: #a7f3d0; }
+.med-card { border-radius: 8px; padding: 11px 13px; margin-bottom: 10px; border-left: 3px solid; }
+.med-card-name { font-weight: 700; color: #f1f5f9; font-size: 13px; }
+.med-card-type { font-size: 11px; color: var(--muted2); margin-top: 3px; }
+.med-card-use { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.med-tag { display: inline-block; margin-top: 6px; font-size: 10px; padding: 2px 8px; border-radius: 12px; }
+.hito { display: flex; gap: 12px; align-items: flex-start; padding: 8px 10px; background: var(--surface2); border-radius: 6px; font-size: 12px; color: #cbd5e1; margin-bottom: 7px; }
+.hito-num { background: var(--accent2); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; font-family: 'Source Code Pro', monospace; }
+.timeline-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+.filter-label { font-size: 11px; color: var(--muted); }
+.filter-btn { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2); background: transparent; color: var(--muted2); cursor: pointer; font-size: 11px; font-family: 'Lato', sans-serif; transition: all .15s; }
+.filter-btn:hover { border-color: var(--accent); color: #93c5fd; background: rgba(59,130,246,.06); }
+.filter-btn.active-filter { color: #fff; }
+.timeline { position: relative; }
+.tl-line { position: absolute; left: 56px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent2) 0%, var(--border2) 60%, var(--green) 100%); }
+.tl-item { display: flex; gap: 0; margin-bottom: 10px; cursor: pointer; position: relative; }
+.tl-date { width: 46px; font-size: 9px; color: #3d5278; text-align: right; padding-top: 14px; flex-shrink: 0; line-height: 1.3; font-family: 'Source Code Pro', monospace; }
+.tl-dot-wrap { width: 22px; display: flex; align-items: flex-start; justify-content: center; padding-top: 11px; flex-shrink: 0; position: relative; z-index: 1; }
+.tl-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid; flex-shrink: 0; transition: transform .15s, box-shadow .15s; }
+.tl-item:hover .tl-dot { transform: scale(1.25); }
+.tl-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; transition: border-color .15s, background .15s; }
+.tl-item:hover .tl-card { background: var(--surface2); }
+.tl-card.expanded { background: #132040; }
+.tl-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.tl-icon-desc { display: flex; gap: 8px; align-items: flex-start; }
+.tl-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.tl-desc { font-size: 12px; font-weight: 700; color: #f1f5f9; line-height: 1.4; }
+.tl-tags { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+.tl-tag { font-size: 10px; padding: 1px 7px; border-radius: 10px; border: 1px solid; }
+.tl-chevron { color: var(--muted); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+.tl-detail { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted2); display: none; }
+.tl-detail.open { display: block; }
+.tl-detail div { margin-bottom: 4px; }
+.tl-detail strong { color: #cbd5e1; }
+.parte-section { font-size: 11px; color: var(--muted2); margin-top: 10px; line-height: 1.7; }
+.posiciones { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pos-card { border-radius: 8px; padding: 12px; }
+.pos-title { font-weight: 700; font-size: 12px; margin-bottom: 8px; }
+.pos-list { margin: 0; padding-left: 16px; font-size: 11px; line-height: 1.85; }
+.pos-purple { background: rgba(45,27,105,.2); border: 1px solid rgba(124,58,237,.3); }
+.pos-purple .pos-title { color: #a78bfa; }
+.pos-purple .pos-list { color: #c4b5fd; }
+.pos-amber { background: rgba(69,26,3,.2); border: 1px solid rgba(217,119,6,.3); }
+.pos-amber .pos-title { color: #fbbf24; }
+.pos-amber .pos-list { color: #fde68a; }
+.resolution-box { background: linear-gradient(135deg, rgba(6,95,70,.2), #090f1c); border: 1px solid rgba(16,185,129,.3); border-radius: 9px; padding: 15px; }
+.res-title { font-weight: 700; font-size: 14px; color: #6ee7b7; margin-bottom: 9px; }
+.res-body { font-size: 12px; color: #d1fae5; line-height: 1.7; }
+.res-note { margin-top: 8px; font-size: 11px; color: #6ee7b7; }
+.norm-row { display: flex; gap: 12px; align-items: center; padding: 10px 13px; background: var(--surface2); border-radius: 6px; border: 1px solid var(--border); margin-bottom: 7px; }
+.norm-ref { font-family: 'Source Code Pro', monospace; font-size: 10px; background: rgba(29,78,216,.15); color: #60a5fa; padding: 3px 10px; border-radius: 4px; white-space: nowrap; min-width: 162px; text-align: center; }
+.norm-desc { font-size: 12px; color: #cbd5e1; }
+.kw-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+.kw { font-size: 11px; padding: 4px 11px; border-radius: 20px; border: 1px solid; transition: opacity .15s; }
+.kw:hover { opacity: .75; }
+@keyframes fadeDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+@media (max-width: 680px) { .grid-2 { grid-template-columns: 1fr; } .posiciones { grid-template-columns: 1fr; } .header { padding: 14px 16px; } .content { padding: 16px; } .stats-bar { display: none; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-icon">⚖️</div>
+  <div style="flex:1">
+    <div class="header-meta">
+      <span class="badge badge-blue">PODER JUDICIAL · MENDOZA</span>
+      <span class="badge badge-green">Prescripción adquisitiva</span>
+      <span class="badge badge-amber">Proceso acumulado</span>
+    </div>
+    <h1>SEGURA PEDRO CAYETANO p/ PRESCRIPCIÓN ADQUISITIVA</h1>
+    <div class="header-sub">
+      <span>Exp. N° <strong>264232</strong></span>
+      <span>CUIJ: <strong>13-04099260-4</strong></span>
+      <span>Inicio: <strong>28/03/2017</strong></span>
+      <span>Compilación: <strong>14/05/2026</strong></span>
+    </div>
+    <div class="header-tribunal">TRIBUNAL DE GESTIÓN ASOCIADA – PRIMERO · Proceso civil · Prescripción adquisitiva · Mendoza</div>
+  </div>
+</div>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" style="color:#3b82f6">453</div><div class="stat-label">Páginas comp.</div></div>
+  <div class="stat"><div class="stat-num" style="color:#8b5cf6">9+</div><div class="stat-label">Años trámite</div></div>
+  <div class="stat"><div class="stat-num" style="color:#0ea5e9">5</div><div class="stat-label">Organismos</div></div>
+  <div class="stat"><div class="stat-num" style="color:#f59e0b">3+</div><div class="stat-label">Causas conexas</div></div>
+  <div class="stat"><div class="stat-num" style="color:#10b981">2026</div><div class="stat-label">Último estado</div></div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('resumen',this)">📋 Resumen</button>
+  <button class="tab-btn" onclick="switchTab('timeline',this)">📅 Línea de tiempo</button>
+  <button class="tab-btn" onclick="switchTab('partes',this)">👥 Partes</button>
+  <button class="tab-btn" onclick="switchTab('objeto',this)">⚖️ Objeto / Hechos</button>
+  <button class="tab-btn" onclick="switchTab('normativa',this)">📜 Normativa</button>
+</div>
+<div class="content">
+  <div class="panel active" id="panel-resumen">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📁 Datos del Expediente</div>
+        <div class="card-body">
+          <div class="info-row"><span class="info-label">N° Expediente</span><span class="info-value mono">264232</span></div>
+          <div class="info-row"><span class="info-label">CUIJ</span><span class="info-value mono">13-04099260-4</span></div>
+          <div class="info-row"><span class="info-label">Tipo de acción</span><span class="info-badge" style="background:rgba(29,78,216,.2);color:#93c5fd;border:1px solid rgba(29,78,216,.4)">Prescripción adquisitiva</span></div>
+          <div class="info-row"><span class="info-label">Tribunal actual</span><span class="info-value">T. Gestión Asociada – Primero</span></div>
+          <div class="info-row"><span class="info-label">Juez</span><span class="info-value">Dr. Juan Darío Penisse</span></div>
+          <div class="info-row"><span class="info-label">Secretario</span><span class="info-value">Dr. Pablo Farina</span></div>
+          <div class="info-row"><span class="info-label">Fecha de inicio</span><span class="info-value">28/03/2017</span></div>
+          <div class="info-row"><span class="info-label">Estado actual</span><span class="info-badge" style="background:rgba(217,119,6,.2);color:#fbbf24;border:1px solid rgba(217,119,6,.4)">Proceso acumulado / sin sentencia definitiva</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏞️ Inmueble / Núcleo del Conflicto</div>
+        <div class="card-body">
+          <div class="med-card" style="background:rgba(29,78,216,.1);border-left-color:#2563eb">
+            <div class="med-card-name">Ruta Provincial N° 7 s/n</div>
+            <div class="med-card-type">Cacheuta – Potrerillos · Luján de Cuyo · Mendoza</div>
+            <div class="med-card-use">Inmueble objeto de prescripción adquisitiva / usucapión</div>
+            <span class="med-tag" style="background:rgba(37,99,235,.2);color:#60a5fa;border:1px solid rgba(37,99,235,.35)">Objeto principal</span>
+          </div>
+          <div class="med-card" style="background:rgba(124,58,237,.1);border-left-color:#7c3aed">
+            <div class="med-card-name">Posesión invocada</div>
+            <div class="med-card-type">Continuidad posesoria alegada por actor y sucesores</div>
+            <div class="med-card-use">Prueba documental, testimonial, contratos y actuaciones conexas</div>
+            <span class="med-tag" style="background:rgba(124,58,237,.2);color:#a78bfa;border:1px solid rgba(124,58,237,.35)">Eje probatorio</span>
+          </div>
+          <div class="alert alert-amber">⚠️ Expediente de alta complejidad: fallecimiento del actor, sucesión procesal, terceros interesados, publicaciones edictales, defensoría oficial y acumulación con procesos conexos.</div>
+        </div>
+      </div>
+      <div class="card col-span">
+        <div class="card-title">🏁 Hitos Clave del Proceso</div>
+        <div class="card-body">
+          <div class="hito"><div class="hito-num">1</div>28/03/2017: Inicio del expediente por prescripción adquisitiva.</div>
+          <div class="hito"><div class="hito-num">2</div>2019: Incidencias de competencia y remisiones entre tribunales.</div>
+          <div class="hito"><div class="hito-num">3</div>13/09/2019: Medidas propias del proceso de usucapión: traslado, edictos, intervención estatal y cartel en el inmueble.</div>
+          <div class="hito"><div class="hito-num">4</div>2021: Intervienen Fiscalía de Estado y Defensoría Oficial.</div>
+          <div class="hito"><div class="hito-num">5</div>24/09/2021: Fallece el actor Pedro Cayetano Segura.</div>
+          <div class="hito"><div class="hito-num">6</div>2022: Comparecen sucesores Carla, Mónica y Sergio Segura.</div>
+          <div class="hito"><div class="hito-num">7</div>2024–2026: Acumulación con causas conexas para evitar sentencias contradictorias.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="panel-timeline">
+    <div class="timeline-filters">
+      <span class="filter-label">Filtrar por:</span>
+      <button class="filter-btn active-filter" style="border-color:#3b82f6;color:#93c5fd;background:rgba(59,130,246,.1)" onclick="filterTimeline('Todos',this)">Todos</button>
+      <button class="filter-btn" onclick="filterTimeline('Actora',this)">Actora</button>
+      <button class="filter-btn" onclick="filterTimeline('Demandada',this)">Demandada</button>
+      <button class="filter-btn" onclick="filterTimeline('Tribunal',this)">Tribunal</button>
+      <button class="filter-btn" onclick="filterTimeline('Secretaría',this)">Secretaría</button>
+      <button class="filter-btn" onclick="filterTimeline('Fiscalía',this)">Fiscalía</button>
+      <button class="filter-btn" onclick="filterTimeline('Defensoría',this)">Defensoría</button>
+      <button class="filter-btn" onclick="filterTimeline('Terceros',this)">Terceros</button>
+      <button class="filter-btn" onclick="filterTimeline('Partes',this)">Partes</button>
+    </div>
+    <div class="timeline" id="timeline-container"><div class="tl-line"></div></div>
+  </div>
+  <div class="panel" id="panel-partes">
+    <div class="grid-2">
+      <div class="card"><div class="card-title" style="border-left:3px solid #7c3aed">🟣 Parte Actora / Sucesores</div><div class="card-body"><div class="info-row"><span class="info-label">Actor original</span><span class="info-value">Pedro Cayetano Segura</span></div><div class="info-row"><span class="info-label">Fallecimiento</span><span class="info-value">24/09/2021</span></div><div class="info-row"><span class="info-label">Sucesores</span><span class="info-value">Carla Nahir Segura<br>Mónica Viviana Segura<br>Sergio Pedro Segura</span></div><div class="info-row"><span class="info-label">Letrados</span><span class="info-value">Dra. María Paula Vetrugno<br>Dr. Pablo E. de Rosas<br>Dra. María Andrea Ferreyra</span></div><p class="parte-section">La sucesión procesal se incorporó luego del fallecimiento del actor, invocándose continuidad del interés posesorio sobre el inmueble.</p></div></div>
+      <div class="card"><div class="card-title" style="border-left:3px solid #d97706">🟡 Demandada / Estado</div><div class="card-body"><div class="info-row"><span class="info-label">Demandado principal</span><span class="info-value">Gobierno de la Provincia de Mendoza</span></div><div class="info-row"><span class="info-label">Municipalidad</span><span class="info-value">Municipalidad de Luján de Cuyo</span></div><div class="info-row"><span class="info-label">Interés fiscal</span><span class="info-value">Fiscalía declaró falta de interés fiscal directo, sin perjuicio del control de legalidad</span></div><p class="parte-section">La intervención estatal se vincula con la posible titularidad, registración, catastro, interés fiscal y control del cumplimiento legal de la usucapión.</p></div></div>
+      <div class="card"><div class="card-title" style="border-left:3px solid #059669">🟢 Fiscalía de Estado</div><div class="card-body"><div class="info-row"><span class="info-label">Rol</span><span class="info-value">Control de legalidad / patrimonio fiscal</span></div><div class="info-row"><span class="info-label">Postura</span><span class="info-value">Sin oposición directa, con reserva de control</span></div><p class="parte-section">Fiscalía de Estado interviene para verificar que la pretensión no afecte intereses fiscales y que se cumplan los recaudos legales del proceso.</p></div></div>
+      <div class="card"><div class="card-title" style="border-left:3px solid #dc2626">🔴 Defensoría / Terceros</div><div class="card-body"><div class="info-row"><span class="info-label">Defensoría</span><span class="info-value">Defensoría Civil Oficial N° 3</span></div><div class="info-row"><span class="info-label">Representación</span><span class="info-value">Presuntos interesados ausentes</span></div><div class="info-row"><span class="info-label">Terceros / intervinientes</span><span class="info-value">Daniel Darío Alonso<br>Moyhamad Ajmal Abdoulvahab<br>Cesionarios y acreedores</span></div><p class="parte-section">La Defensoría solicitó mayor individualización del inmueble, nueva publicación edictal e inspección judicial.</p></div></div>
+    </div>
+  </div>
+  <div class="panel" id="panel-objeto">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card"><div class="card-title">🎯 Objeto del Proceso</div><div class="card-body" style="font-size:13px;color:#cbd5e1;line-height:1.75"><p style="margin-bottom:10px">El expediente tiene por objeto la <strong>prescripción adquisitiva de dominio</strong> sobre un inmueble ubicado en <strong>Ruta Provincial N° 7 s/n, Cacheuta – Potrerillos, Luján de Cuyo, Mendoza</strong>.</p><p style="margin-bottom:10px">La parte actora invoca una posesión prolongada, pública, pacífica e ininterrumpida, con continuidad procesal por parte de sus sucesores luego del fallecimiento del actor original.</p><p>La complejidad del proceso se incrementa por la intervención de organismos estatales, terceros, posibles interesados ausentes, denuncias, contratos posesorios, cesiones y acumulación de causas conexas.</p></div></div>
+      <div class="card"><div class="card-title">📊 Posiciones de las Partes</div><div class="card-body"><div class="posiciones"><div class="pos-card pos-purple"><div class="pos-title">🟣 Actora / Sucesores argumentan:</div><ul class="pos-list"><li>Posesión pública, pacífica y prolongada del inmueble.</li><li>Continuidad posesoria familiar y sucesoria.</li><li>Existencia de actos posesorios y documentación respaldatoria.</li><li>Derecho a adquirir el dominio por usucapión.</li><li>Necesidad de obtener sentencia declarativa de dominio.</li></ul></div><div class="pos-card pos-amber"><div class="pos-title">🟡 Controles / oposiciones señalan:</div><ul class="pos-list"><li>Necesidad de individualización precisa del inmueble.</li><li>Reiteración o corrección de publicaciones edictales.</li><li>Prueba suficiente de corpus y animus posesorio.</li><li>Protección de presuntos interesados ausentes.</li><li>Prevención de sentencias contradictorias por causas conexas.</li></ul></div></div></div></div>
+      <div class="card"><div class="card-title">✅ Estado Procesal</div><div class="card-body"><div class="resolution-box"><div class="res-title">📂 Proceso acumulado / pendiente de sentencia definitiva</div><div class="res-body">El expediente se encuentra en trámite, con acumulación de procesos vinculados por conexidad objetiva y riesgo de pronunciamientos contradictorios sobre la posesión del inmueble.</div><div class="res-note">No surge sentencia definitiva de mérito en la información procesada.</div></div></div></div>
+    </div>
+  </div>
+  <div class="panel" id="panel-normativa">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card"><div class="card-title">📜 Marco Normativo / Procesal Relevante</div><div class="card-body"><div class="norm-row"><span class="norm-ref">Art. 209 CPCCyT</span><span class="norm-desc">Reglas procesales aplicables al juicio de prescripción adquisitiva.</span></div><div class="norm-row"><span class="norm-ref">Art. 1905 CCyC</span><span class="norm-desc">Sentencia en procesos de prescripción adquisitiva y recaudos registrales.</span></div><div class="norm-row"><span class="norm-ref">Arts. 98/100 CPCCyT</span><span class="norm-desc">Acumulación de procesos por conexidad y prevención de decisiones contradictorias.</span></div><div class="norm-row"><span class="norm-ref">Art. 23 CPCCyT</span><span class="norm-desc">Sucesión procesal por fallecimiento de una de las partes.</span></div><div class="norm-row"><span class="norm-ref">Art. 75 CPCCyT</span><span class="norm-desc">Representación de interesados ausentes / intervención de defensoría.</span></div><div class="norm-row"><span class="norm-ref">Ley 17.801</span><span class="norm-desc">Principios registrales, tracto sucesivo y publicidad registral.</span></div></div></div>
+      <div class="card"><div class="card-title">🔑 Palabras Clave del Expediente</div><div class="card-body"><div class="kw-cloud" id="kw-cloud"></div></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const movimientos = [
+  {fecha:"28/03/2017", tipo:"Inicio", desc:"Inicio del expediente por prescripción adquisitiva", actor:"Actora", icono:"⚡", detalle:"Se inicia el proceso caratulado SEGURA PEDRO CAYETANO p/ PRESCRIPCIÓN ADQUISITIVA."},
+  {fecha:"04/02/2019", tipo:"Decreto", desc:"Previo: se requiere determinar concretamente demandada y domicilio", actor:"Tribunal", icono:"📝", detalle:"El Tribunal requiere completar recaudos formales vinculados a la identificación de la parte demandada."},
+  {fecha:"08/02/2019", tipo:"Decreto", desc:"Se solicita remisión de autos conexos ad effectum videndi", actor:"Tribunal", icono:"📎", detalle:"Se detecta la existencia de autos vinculados y se requiere su remisión para análisis."},
+  {fecha:"25/03/2019", tipo:"Resolución", desc:"Declinación de competencia por conexidad hacia TGA N° 1", actor:"Tribunal", icono:"⚖️", detalle:"Se resuelve declinar competencia y remitir actuaciones por conexidad."},
+  {fecha:"09/04/2019", tipo:"Decreto", desc:"Recepción en Tribunal de Gestión Asociada Primero", actor:"Secretaría", icono:"📥", detalle:"Se tiene por recibido el expediente y se hace saber el juez interviniente."},
+  {fecha:"13/09/2019", tipo:"Decreto", desc:"Medidas iniciales del proceso de usucapión: traslado, edictos, cartel e intervención estatal", actor:"Tribunal", icono:"📜", detalle:"Se ordenan medidas propias de la prescripción adquisitiva, incluyendo edictos, cartel, traslado y citaciones estatales."},
+  {fecha:"13/02/2020", tipo:"Decreto", desc:"Se tiene dirigida la demanda contra el Gobierno de Mendoza", actor:"Demandada", icono:"🏛️", detalle:"Se tiene por dirigida la demanda contra el Gobierno de Mendoza."},
+  {fecha:"29/07/2021", tipo:"Escrito", desc:"Fiscalía de Estado se hace parte y declara falta de interés fiscal directo", actor:"Fiscalía", icono:"🏛️", detalle:"Fiscalía interviene, manifiesta falta de interés fiscal directo y reserva control de legalidad."},
+  {fecha:"10/09/2021", tipo:"Escrito", desc:"Defensoría Civil Oficial N° 3 se hace parte por presuntos interesados ausentes", actor:"Defensoría", icono:"🛡️", detalle:"Solicita nueva publicación edictal, mayor individualización del inmueble e inspección judicial."},
+  {fecha:"14/09/2021", tipo:"Decreto", desc:"Se ordena republicar edictos con datos precisos del inmueble", actor:"Tribunal", icono:"📢", detalle:"El Tribunal hace lugar a observaciones de Defensoría y ordena ampliar la publicidad del proceso."},
+  {fecha:"24/09/2021", tipo:"Hecho", desc:"Fallecimiento del actor Pedro Cayetano Segura", actor:"Actora", icono:"⚫", detalle:"El fallecimiento da lugar a la posterior sucesión procesal por sus herederos."},
+  {fecha:"05/11/2021", tipo:"Escrito", desc:"Terceros se presentan, contestan y ofrecen prueba", actor:"Terceros", icono:"👥", detalle:"Intervienen terceros con invocación de derechos posesorios y prueba documental."},
+  {fecha:"04/05/2022", tipo:"Escrito", desc:"Daniel Alonso adjunta denuncias y solicita audiencia de conciliación", actor:"Terceros", icono:"📄", detalle:"Se incorporan planteos vinculados a conflictos entre partes y se solicita instancia conciliatoria."},
+  {fecha:"24/08/2022", tipo:"Escrito", desc:"Sucesores denuncian fallecimiento, acompañan declaratoria y solicitan sucesión procesal", actor:"Actora", icono:"👨‍👩‍👧", detalle:"Comparecen Carla Nahir Segura, Mónica Viviana Segura y Sergio Pedro Segura."},
+  {fecha:"01/09/2022", tipo:"Decreto", desc:"Se tiene por presentados a los sucesores del actor", actor:"Tribunal", icono:"✅", detalle:"El Tribunal reconoce la intervención de los sucesores en el carácter invocado."},
+  {fecha:"12/09/2022", tipo:"Decreto", desc:"Renuncia de patrocinio y emplazamiento a comparecer", actor:"Secretaría", icono:"⏸️", detalle:"Se provee sobre renuncias de patrocinio y se ordenan emplazamientos."},
+  {fecha:"24/03/2023", tipo:"Escrito", desc:"Cesión de derechos posesorios / incorporación de nuevos intereses", actor:"Partes", icono:"🔁", detalle:"Se incorporan cesiones y derechos vinculados a la posesión discutida."},
+  {fecha:"12/09/2024", tipo:"Resolución", desc:"Inicio / desarrollo de acumulación con causas conexas", actor:"Tribunal", icono:"🧩", detalle:"Se analiza acumulación con procesos similares para evitar sentencias contradictorias."},
+  {fecha:"29/04/2025", tipo:"Escrito", desc:"Solicitud de audiencia inicial / testimonial", actor:"Actora", icono:"📅", detalle:"Se solicita avanzar con audiencia y producción de prueba."},
+  {fecha:"03/07/2025", tipo:"Escrito", desc:"Aclaraciones sobre representación y continuidad procesal", actor:"Actora", icono:"📌", detalle:"Se formulan aclaraciones procesales relacionadas con representación y patrocinio."},
+  {fecha:"10/02/2026", tipo:"Resolución", desc:"Acumulación de procesos conexos y sustanciación para sentencia única", actor:"Tribunal", icono:"⚖️", detalle:"Se resuelve avanzar con acumulación para tratamiento coordinado de la posesión discutida."},
+  {fecha:"14/05/2026", tipo:"Estado", desc:"Expediente compilado: proceso vigente sin sentencia definitiva registrada", actor:"Secretaría", icono:"📚", detalle:"El compilado del portal registra el expediente en trámite al 14/05/2026."}
+];
+const actorStyle = {
+  Actora:{bg:"rgba(124,58,237,.15)",border:"#7c3aed",text:"#a78bfa"},
+  Demandada:{bg:"rgba(180,83,9,.15)",border:"#b45309",text:"#fbbf24"},
+  Tribunal:{bg:"rgba(3,105,161,.15)",border:"#0369a1",text:"#38bdf8"},
+  Secretaría:{bg:"rgba(71,85,105,.15)",border:"#475569",text:"#94a3b8"},
+  Fiscalía:{bg:"rgba(6,95,70,.15)",border:"#065f46",text:"#6ee7b7"},
+  Defensoría:{bg:"rgba(220,38,38,.14)",border:"#dc2626",text:"#f87171"},
+  Terceros:{bg:"rgba(217,119,6,.15)",border:"#d97706",text:"#fbbf24"},
+  Partes:{bg:"rgba(5,150,105,.15)",border:"#059669",text:"#34d399"}
+};
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+  const panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+function buildTimeline(filtro = 'Todos') {
+  const container = document.getElementById('timeline-container');
+  if (!container) return;
+  container.innerHTML = '<div class="tl-line"></div>';
+  const filtrados = filtro === 'Todos' ? movimientos : movimientos.filter(mov => mov.actor === filtro);
+  if (filtrados.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'alert alert-amber';
+    empty.textContent = 'No hay movimientos para este filtro.';
+    container.appendChild(empty);
+    return;
+  }
+  filtrados.forEach((mov, index) => {
+    const st = actorStyle[mov.actor] || actorStyle['Secretaría'];
+    const shortDate = mov.fecha.includes('/') ? mov.fecha.split('/').slice(0, 2).join('/') : mov.fecha;
+    const uniqueId = `mov-${filtro.replace(/\s+/g, '-')}-${index}`;
+    const item = document.createElement('div');
+    item.className = 'tl-item';
+    item.innerHTML = `
+      <div class="tl-date">${shortDate}</div>
+      <div class="tl-dot-wrap"><div class="tl-dot" style="background:${st.border};border-color:${st.border};box-shadow:0 0 6px ${st.border}88"></div></div>
+      <div class="tl-card" id="tlcard-${uniqueId}">
+        <div class="tl-top">
+          <div class="tl-icon-desc">
+            <div class="tl-icon">${mov.icono}</div>
+            <div><div class="tl-desc">${mov.desc}</div><div class="tl-tags"><span class="tl-tag" style="background:${st.bg};color:${st.text};border-color:${st.border}44">${mov.actor}</span><span class="tl-tag" style="background:rgba(15,23,42,.6);color:#64748b;border-color:#1e3050">${mov.tipo}</span></div></div>
+          </div>
+          <span class="tl-chevron" id="chev-${uniqueId}">▼</span>
+        </div>
+        <div class="tl-detail" id="detail-${uniqueId}"><div>📅 Fecha completa: <strong>${mov.fecha}</strong></div><div>🏷️ Tipo de actuación: <strong>${mov.tipo}</strong></div><div>👤 Actor / fuente: <strong>${mov.actor}</strong></div><div>📝 Detalle: <strong>${mov.detalle}</strong></div></div>
+      </div>`;
+    item.addEventListener('click', function () {
+      const detail = document.getElementById('detail-' + uniqueId);
+      const card = document.getElementById('tlcard-' + uniqueId);
+      const chev = document.getElementById('chev-' + uniqueId);
+      if (!detail || !card || !chev) return;
+      const isOpen = detail.classList.contains('open');
+      detail.classList.toggle('open', !isOpen);
+      card.classList.toggle('expanded', !isOpen);
+      chev.textContent = isOpen ? '▼' : '▲';
+    });
+    container.appendChild(item);
+  });
+}
+function filterTimeline(actor, btn) {
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    button.classList.remove('active-filter');
+    button.style.borderColor = '';
+    button.style.color = '';
+    button.style.background = '';
+  });
+  if (btn) {
+    btn.classList.add('active-filter');
+    btn.style.borderColor = '#3b82f6';
+    btn.style.color = '#93c5fd';
+    btn.style.background = 'rgba(59,130,246,.1)';
+  }
+  buildTimeline(actor);
+}
+function buildKeywords() {
+  const cloud = document.getElementById('kw-cloud');
+  if (!cloud) return;
+  const keywords = [["Prescripción Adquisitiva",0],["Usucapión",1],["Posesión veinteañal",2],["Corpus posesorio",0],["Animus domini",1],["Ruta Provincial 7",2],["Cacheuta",0],["Potrerillos",1],["Luján de Cuyo",2],["Gobierno de Mendoza",0],["Fiscalía de Estado",1],["Defensoría Oficial",2],["Interesados ausentes",0],["Edictos",1],["Inspección judicial",2],["Sucesión procesal",0],["Declaratoria de herederos",1],["Acumulación de procesos",2],["Causas conexas",0],["Sentencia única",1],["Derechos posesorios",2],["Cesión de derechos",0],["Control de legalidad",1],["Tracto sucesivo",2],["Art. 209 CPCCyT",0],["Art. 1905 CCyC",1],["Ley 17.801",2]];
+  const kwStyles = [{bg:"rgba(29,78,216,.15)",color:"#60a5fa",border:"rgba(29,78,216,.35)"},{bg:"rgba(124,58,237,.15)",color:"#a78bfa",border:"rgba(124,58,237,.35)"},{bg:"rgba(6,95,70,.15)",color:"#6ee7b7",border:"rgba(6,95,70,.35)"}];
+  cloud.innerHTML = '';
+  keywords.forEach(([kw, styleIndex]) => {
+    const sp = document.createElement('span');
+    const style = kwStyles[styleIndex];
+    sp.className = 'kw';
+    sp.textContent = kw;
+    sp.style.background = style.bg;
+    sp.style.color = style.color;
+    sp.style.borderColor = style.border;
+    cloud.appendChild(sp);
+  });
+}
+document.addEventListener('DOMContentLoaded', function () {
+  buildTimeline('Todos');
+  buildKeywords();
+});
+</script>
+</body>
+</html>
